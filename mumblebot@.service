@@ -8,7 +8,7 @@ Requires=network.target
 
 
 [Service]
-ExecStart=/usr/bin/docker run -i -e "BOT_IRC_CHANNEL=%i" -e "BOT_IRC_SERVER=irc.madirc.net" -e "BOT_MUMBLE_CHANNEL=#%i" -e "BOT_MUMBLE_SERVER=mumble.madirc.net" -e BOT_BOTNAME=linker-%i --name mumble-%i --rm mumblebot:latest
+ExecStart=/usr/bin/docker run -i -e "BOT_IRC_CHANNEL=%i" -e "BOT_IRC_SERVER=irc.madirc.net" -e "BOT_MUMBLE_CHANNEL=#%i" -e "BOT_MUMBLE_SERVER=mumble.madirc.net" -e BOT_BOTNAME=linker-%i --name mumble-%i --rm sheogorath/docker-sftmumblebot:latest
 ExecStop=/usr/bin/docker stop mumble-%i
 Restart=on-failure
 
