@@ -1,0 +1,8 @@
+@@ -44,7 +44,6 @@ class ConsoleConnection(AbstractConnection.AbstractConnection):
+             return False
+
+         line = util.try_decode(line, self._encoding)
+-        self._invokeTextCallback("console", line)
+         return True
+
+     # send the given line to stdout.
