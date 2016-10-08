@@ -1,8 +1,91 @@
-@@ -44,7 +44,6 @@ class ConsoleConnection(AbstractConnection.AbstractConnection):
-             return False
+@@ -10,12 +10,12 @@ import sftbot
 
-         line = util.try_decode(line, self._encoding)
--        self._invokeTextCallback("console", line)
-         return True
+ irc = None
+ mumble = None
+-console = None
++#console = None
 
-     # send the given line to stdout.
+
+ def mumbleTextMessageCallback(sender, message):
+     line = "mumble: " + sender + ": " + message
+-    console.sendTextMessage(line)
++    #console.sendTextMessage(line)
+     irc.sendTextMessage(line)
+     if(message == 'gtfo'):
+         mumble.sendTextMessage("KAY CU")
+@@ -24,7 +24,7 @@ def mumbleTextMessageCallback(sender, message):
+
+ def ircTextMessageCallback(sender, message):
+     line = "irc: " + sender + ": " + message
+-    console.sendTextMessage(line)
++    #console.sendTextMessage(line)
+     mumble.sendTextMessage(line)
+     if (message == 'gtfo'):
+         irc.sendTextMessage("KAY CU")
+@@ -43,7 +43,7 @@ def mumbleConnected():
+
+ def mumbleDisconnected():
+     line = "connection to mumble lost. reconnect in 5 seconds."
+-    console.sendTextMessage(line)
++    #console.sendTextMessage(line)
+     irc.setAway(line)
+     time.sleep(5)
+     mumble.start()
+@@ -51,7 +51,7 @@ def mumbleDisconnected():
+
+ def mumbleConnectionFailed():
+     line = "connection to mumble failed. retrying in 15 seconds."
+-    console.sendTextMessage(line)
++    #console.sendTextMessage(line)
+     irc.setAway(line)
+     time.sleep(15)
+     mumble.start()
+@@ -63,7 +63,7 @@ def ircConnected():
+
+ def ircDisconnected():
+     line = "connection to irc lost. reconnect in 15 seconds."
+-    console.sendTextMessage(line)
++    #console.sendTextMessage(line)
+     mumble.setComment(line)
+     time.sleep(15)
+     irc.start()
+@@ -82,7 +82,7 @@ def main():
+
+     global mumble
+     global irc
+-    global console
++    #global console
+
+     loglevel = 3
+
+@@ -149,15 +149,15 @@ def main():
+         "irc",
+         ircloglevel)
+
+-    console = ConsoleConnection.ConsoleConnection(
+-        "utf-8",
+-        "console",
+-        loglevel)
++    #console = ConsoleConnection.ConsoleConnection(
++    #    "utf-8",
++    #    "console",
++    #    loglevel)
+
+     # register text callback functions
+     mumble.registerTextCallback(mumbleTextMessageCallback)
+     irc.registerTextCallback(ircTextMessageCallback)
+-    console.registerTextCallback(consoleTextMessageCallback)
++    #console.registerTextCallback(consoleTextMessageCallback)
+
+     # register connection-established callback functions
+     mumble.registerConnectionEstablishedCallback(mumbleConnected)
+@@ -174,7 +174,7 @@ def main():
+     # start the connections.
+     # they will be self-sustaining due to the callback functions.
+     mumble.start()
+-    irc.start()
++    irc.run()
+
+     # start the console connection, outside a thread (as main loop)
+     console.run()
+

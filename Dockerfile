@@ -13,7 +13,7 @@ COPY console-fix.patch sftbot.conf entrypoint.sh /opt/mumblebot/
 #COPY entrypoint.sh /opt/mumblebot/
 
 RUN apt-get install -y patch \
-    && patch /opt/mumblebot/sftbot/ConsoleConnection.py /opt/mumblebot/console-fix.patch \
+    && patch /opt/mumblebot/sftbot/__main__.py /opt/mumblebot/console-fix.patch \
     && apt-get purge -y patch \
     && apt-get autoremove -y
 
